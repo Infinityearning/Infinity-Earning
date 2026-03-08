@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unity Earning - Premium Schedule</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --dark-navy: #0f172a;
+            --bg-gray: #f8fafc;
+            --photo-color: #7c3aed;
+            --video-color: #e11d48;
+            --white: #ffffff;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            background: var(--bg-gray); 
+            color: #334155;
+            text-align: center; 
+        }
+
+        /* --- Unique Header Design --- */
+        .header { 
+            padding: 30px 15px; 
+            background: var(--white);
+            border-bottom: 3px solid var(--primary-blue);
+        }
+        .platform-name { 
+            color: var(--primary-blue); 
+            font-weight: 700; 
+            font-size: 14px; 
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .main-title { 
+            font-size: 26px; 
+            font-weight: 900; 
+            margin: 8px 0; 
+            color: var(--dark-navy);
+        }
+        .batch-info {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* --- Teacher Indicators --- */
+        .teacher-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .tag {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .dot { height: 8px; width: 8px; border-radius: 50%; margin-right: 8px; }
+
+        /* --- Month Tabs --- */
+        .month-tabs { 
+            display: flex; 
+            justify-content: center; 
+            background: #e2e8f0; 
+            margin: 20px; 
+            border-radius: 15px; 
+            padding: 6px; 
+        }
+        .month { 
+            flex: 1; 
+            padding: 12px; 
+            font-weight: 700; 
+            color: #475569; 
+            cursor: pointer; 
+            border-radius: 10px; 
+            transition: all 0.3s ease; 
+        }
+        .month.active { 
+            background: var(--white); 
+            color: var(--primary-blue); 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        }
+
+        /* --- Schedule Section --- */
+        .schedule-container { 
+            margin: 0 20px 30px 20px; 
+            display: none; 
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .schedule-container.active { display: block; }
+
+        .table-header { 
+            display: flex; 
+            background: var(--dark-navy); 
+            color: white; 
+            padding: 15px 0; 
+            text-align: left; 
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        .col-1 { width: 35%; padding-left: 20px; }
+        .col-2 { width: 65%; padding-left: 15px; }
+
+        .row { display: flex; border-bottom: 1px solid #f1f5f9; align-items: stretch; min-height: 90px; }
+        .date-col { 
+            width: 35%; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            background: #fdfdfd; 
+            border-right: 1px solid #f1f5f9; 
+        }
+        .date-col h3 { margin: 0; font-size: 18px; color: var(--dark-navy); }
+        .date-col span { font-size: 11px; color: #94a3b8; font-weight: 600; }
+
+        .class-col { width: 65%; padding: 12px; display: flex; flex-direction: column; gap: 10px; justify-content: center; }
+        
+        /* --- Dynamic Cards --- */
+        .card { 
+            padding: 12px; 
+            border-radius: 12px; 
+            text-align: left; 
+            transition: transform 0.2s;
+        }
+        .photo-edit { background: #f5f3ff; border-left: 5px solid var(--photo-color); }
+        .video-edit { background: #fff1f2; border-left: 5px solid var(--video-color); }
+        
+        .subject { font-size: 15px; font-weight: 800; color: #1e293b; }
+        .status-off { color: #be123c; font-size: 11px; font-weight: 800; margin-top: 4px; text-transform: uppercase; }
+        .time { font-size: 11px; color: #64748b; font-weight: 600; margin-top: 2px; }
+
+        .full-off { color: #f43f5e; font-weight: 800; font-size: 14px; text-transform: uppercase; }
+
+        /* --- Unique Footer/Reference Design --- */
+        .reference-section { 
+            background: var(--white); 
+            border-radius: 25px; 
+            margin: 20px; 
+            padding: 25px; 
+            text-align: left; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+        }
+        .ref-title { 
+            text-align: center; 
+            font-weight: 800; 
+            font-size: 18px; 
+            margin-bottom: 20px; 
+            color: var(--dark-navy);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+        .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .ref-item h4 { margin: 0; font-size: 13px; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 0.5px; }
+        .ref-item p { margin: 5px 0; font-size: 12px; color: #64748b; line-height: 1.5; }
+
+        .copyright { font-size: 10px; color: #94a3b8; margin: 40px 0; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="platform-name">UNITY EARNING E-LEARNING PLATFORM</div>
+        <div class="main-title">CLASS SCHEDULE 2026</div>
+        <div class="batch-info">BATCH NO: UE104 | SKILL DEVELOPMENT</div>
+    </div>
+
+    <div class="teacher-tags">
+        <div class="tag"><div class="dot" style="background:var(--photo-color)"></div> Rahat: PE</div>
+        <div class="tag"><div class="dot" style="background:var(--video-color)"></div> Naimul: VE</div>
+    </div>
+
+    <div class="month-tabs">
+        <div class="month active" onclick="showMonth('april', this)">April</div>
+        <div class="month" onclick="showMonth('may', this)">May</div>
+        <div class="month" onclick="showMonth('june', this)">June</div>
+    </div>
+
+    <div id="april" class="schedule-container active">
+        <div class="table-header"><div class="col-1">তারিখ ও দিন</div><div class="col-2">ক্লাস ও সময়সূচী</div></div>
+        <div id="april-list"></div>
+    </div>
+
+    <div id="may" class="schedule-container">
+        <div class="table-header"><div class="col-1">তারিখ ও দিন</div><div class="col-2">ক্লাস ও সময়সূচী</div></div>
+        <div id="may-list"></div>
+    </div>
+
+    <div id="june" class="schedule-container">
+        <div class="table-header"><div class="col-1">তারিখ ও দিন</div><div class="col-2">ক্লাস ও সময়সূচী</div></div>
+        <div id="june-list"></div>
+    </div>
+
+    <div class="reference-section">
+        <div class="ref-title">Unity Earning - Teacher Reference</div>
+        <div class="ref-grid">
+            <div class="ref-item">
+                <h4>RAHAT ISLAM</h4>
+                <p>• Photo Editing<br>(Sat/Sun/Mon/Wed/Thu)</p>
+            </div>
+            <div class="ref-item">
+                <h4>NAIMUL ISLAM</h4>
+                <p>• Video Editing<br>(Sat/Mon/Tue/Wed/Thu)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright">© 2026 UNITY EARNING E-LEARNING PLATFORM.</div>
+
+    <script>
+        const months = [
+            { id: 'april', name: 'এপ্রিল', days: 30, startDay: 3 }, // April 1, 2026 is Wed
+            { id: 'may', name: 'মে', days: 31, startDay: 5 },       // May 1, 2026 is Fri
+            { id: 'june', name: 'জুন', days: 30, startDay: 1 }      // June 1, 2026 is Mon
+        ];
+
+        const dayNames = ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"];
+
+        function generateSchedule() {
+            months.forEach(m => {
+                let html = '';
+                for (let i = 1; i <= m.days; i++) {
+                    let currentDayIndex = (m.startDay + i - 1) % 7;
+                    let dayName = dayNames[currentDayIndex];
+                    
+                    // Rules: 
+                    // Photo: Off on Fri (5) & Tue (2)
+                    // Video: Off on Fri (5), Sun (0), Wed (3)
+                    let photoOff = (currentDayIndex === 5 || currentDayIndex === 2);
+                    let videoOff = (currentDayIndex === 5 || currentDayIndex === 0 || currentDayIndex === 3);
+                    
+                    html += `<div class="row">
+                        <div class="date-col"><h3>${i < 10 ? '0'+i : i} ${m.name}</h3><span>(${dayName})</span></div>
+                        <div class="class-col">`;
+                    
+                    if (currentDayIndex === 5) {
+                        html += `<div class="full-off">সাপ্তাহিক ছুটি (OFF)</div>`;
+                    } else {
+                        html += `
+                        <div class="card photo-edit">
+                            <div class="subject">Photo Editing</div>
+                            ${photoOff ? '<div class="status-off">● Class Off</div>' : '<div class="time">04:00 PM | Teacher: Rahat</div>'}
+                        </div>
+                        <div class="card video-edit">
+                            <div class="subject">Video Editing</div>
+                            ${videoOff ? '<div class="status-off">● Class Off</div>' : '<div class="time">07:00 PM | Teacher: Naimul</div>'}
+                        </div>`;
+                    }
+                    html += `</div></div>`;
+                }
+                document.getElementById(m.id + '-list').innerHTML = html;
+            });
+        }
+
+        function showMonth(monthId, btn) {
+            document.querySelectorAll('.schedule-container').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.month').forEach(el => el.classList.remove('active'));
+            document.getElementById(monthId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        generateSchedule();
+    </script>
+</body>
+</html>
